@@ -1,0 +1,12 @@
+<h1> Mercado: {{nome_fantasia}}</h1>
+<h3>CNPJ: {{cnpj}}</h3>
+
+<input type="text"placeholder="Filtrar produto por nome"#filter >
+<button class ="primary" type="button" (click) = "filterResults(filter.value)"> Buscar </button>
+<br>
+<br>
+<br>
+
+@for (_produto of filteredprodutosList; track _produto.id_produto) {
+  <app-card-produto [produto]="_produto"></app-card-produto>
+}

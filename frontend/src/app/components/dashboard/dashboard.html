@@ -1,0 +1,313 @@
+<div class="dashboard-container">
+  <!-- Header -->
+  <header class="dashboard-header">
+    <div class="dashboard-header-left">
+      <img src="/logo aplicacao.png" alt="Logo QTL Finanças" class="dashboard-logo">
+      <div>
+        <h1 class="dashboard-title">Meu Painel Financeiro</h1>
+        <p class="dashboard-subtitle">Acompanhe seus gastos e alcance suas metas.</p>
+      </div>
+    </div>
+    <div class="dashboard-user-menu-wrapper">
+      <button 
+        (click)="toggleUserMenu()" 
+        class="dashboard-user-menu-button">
+        <img src="/foto-do-usuario.png" alt="Avatar do Usuário" class="dashboard-user-avatar">
+        <span class="dashboard-username">{{ username }}</span>
+      </button>
+      <div 
+        *ngIf="showUserMenu" 
+        class="dashboard-user-menu">
+        <a 
+          (click)="navigateToSettings()" 
+          class="dashboard-user-menu-item">
+          Configuração do usuário
+        </a>
+        <a 
+          (click)="logout()" 
+          class="dashboard-user-menu-item">
+          Logout
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="dashboard-main-content">
+    <!-- Left Column -->
+    <div class="dashboard-left-column">
+      <!-- Resumo Mensal -->
+      <div class="dashboard-card">
+        <h2 class="dashboard-card-title">Resumo Mensal</h2>
+        <div class="dashboard-summary-grid">
+          <div class="dashboard-summary-item-blue">
+            <p class="dashboard-summary-label">Orçamento</p>
+            <p class="dashboard-summary-value-blue">R$ {{ summaryBudget.toFixed(2) }}</p>
+          </div>
+          <div class="dashboard-summary-item-red">
+            <p class="dashboard-summary-label">Total Gasto</p>
+            <p class="dashboard-summary-value-red">R$ {{ summarySpent.toFixed(2) }}</p>
+          </div>
+          <div class="dashboard-summary-item-green">
+            <p class="dashboard-summary-label">Saldo</p>
+            <p class="dashboard-summary-value-green">R$ {{ summaryBalance.toFixed(2) }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Histórico de Orçamentos -->
+      <div class="dashboard-card">
+        <h2 class="dashboard-card-title">Histórico de Orçamentos</h2>
+        <div class="dashboard-list" *ngIf="budgets.length > 0">
+          <div 
+            *ngFor="let budget of budgets" 
+            class="dashboard-list-item">
+            <div>
+              <p class="dashboard-list-item-title">{{ budget.month_year | date: 'MM/yyyy' }}</p>
+              <p class="dashboard-list-item-subtitle">R$ {{ budget.budget_amount | number: '1.2-2' }}</p>
+            </div>
+            <button 
+              (click)="deleteBudget(budget.id)" 
+              class="dashboard-delete-button">
+              Excluir
+            </button>
+          </div>
+        </div>
+        <p *ngIf="budgets.length === 0" class="dashboard-no-items-message">
+          Nenhum orçamento registrado ainda.
+        </p>
+      </div>
+
+      <!-- Adicionar Novo Lançamento -->
+      <div class="dashboard-card">
+        <h2 class="dashboard-card-title">Adicionar Novo Lançamento</h2>
+        <form (ngSubmit)="onTransactionSubmit()" class="dashboard-form">
+          <div>
+            <label class="dashboard-form-label">Tipo de Lançamento</label>
+            <div class="dashboard-radio-group">
+              <label class="dashboard-radio-label">
+                <input type="radio" name="tipo_lancamento" value="despesa" class="dashboard-radio-input" checked> 
+                Despesa
+              </label>
+            </div>
+          </div>
+          <div class="dashboard-form-grid">
+            <div>
+              <label for="trans-date" class="dashboard-form-label">Data</label>
+              <input 
+                type="date" 
+                id="trans-date" 
+                [(ngModel)]="transactionDate"
+                name="transactionDate"
+                class="dashboard-form-input" 
+                required>
+            </div>
+            <div>
+              <label for="trans-amount" class="dashboard-form-label">Valor (R$)</label>
+              <input 
+                type="number" 
+                id="trans-amount" 
+                [(ngModel)]="transactionAmount"
+                name="transactionAmount"
+                placeholder="50.75" 
+                step="0.01" 
+                class="dashboard-form-input" 
+                required>
+            </div>
+          </div>
+          <div>
+            <label for="trans-desc" class="dashboard-form-label">Descrição</label>
+            <input 
+              type="text" 
+              id="trans-desc" 
+              [(ngModel)]="transactionDescription"
+              name="transactionDescription"
+              placeholder="Ex: Almoço com amigos" 
+              class="dashboard-form-input" 
+              required>
+          </div>
+          <div>
+            <label for="trans-category" class="dashboard-form-label">Categoria</label>
+            <select 
+              id="trans-category" 
+              [(ngModel)]="transactionCategory"
+              name="transactionCategory"
+              class="dashboard-form-select"
+              required>
+              <option value="">Selecione uma categoria</option>
+              <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+            </select>
+          </div>
+          <button 
+            type="submit" 
+            class="dashboard-primary-button">
+            Adicionar
+          </button>
+        </form>
+      </div>
+
+      <!-- Histórico de Lançamentos -->
+      <div class="dashboard-card">
+        <h2 class="dashboard-card-title">Histórico de Lançamentos</h2>
+        <div class="dashboard-table-container" *ngIf="transactions.length > 0">
+          <table class="dashboard-table">
+            <thead class="dashboard-table-header">
+              <tr>
+                <th class="dashboard-table-th">Data</th>
+                <th class="dashboard-table-th">Descrição</th>
+                <th class="dashboard-table-th">Categoria</th>
+                <th class="dashboard-table-th-right">Valor</th>
+                <th class="dashboard-table-th-center">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let transaction of transactions" class="dashboard-table-row">
+                <td class="dashboard-table-td">{{ transaction.date | date: 'dd/MM/yyyy' }}</td>
+                <td class="dashboard-table-td">{{ transaction.description }}</td>
+                <td class="dashboard-table-td">{{ getCategoryName(transaction.category_id) }}</td>
+                <td class="dashboard-table-td-right">R$ {{ transaction.amount | number: '1.2-2' }}</td>
+                <td class="dashboard-table-td-center">
+                  <button 
+                    (click)="deleteTransaction(transaction.id)" 
+                    class="dashboard-delete-button">
+                    Excluir
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p *ngIf="transactions.length === 0" class="dashboard-no-items-message">
+          Nenhum lançamento registrado ainda.
+        </p>
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="dashboard-right-column">
+      <!-- Orçamento -->
+      <div class="dashboard-card">
+        <h2 class="dashboard-card-title">Orçamento</h2>
+        <form (ngSubmit)="onBudgetSubmit()" class="dashboard-form">
+          <div>
+            <label for="budget-date" class="dashboard-form-label">Mês/Ano do Orçamento</label>
+            <input 
+              type="month" 
+              id="budget-date" 
+              [(ngModel)]="budgetDate"
+              name="budgetDate"
+              class="dashboard-form-input" 
+              required>
+          </div>
+          <div>
+            <label for="budget-amount" class="dashboard-form-label">Valor do Orçamento Mensal</label>
+            <input 
+              type="number" 
+              id="budget-amount" 
+              [(ngModel)]="budgetAmount"
+              name="budgetAmount"
+              placeholder="3000" 
+              step="0.01" 
+              class="dashboard-form-input" 
+              required>
+          </div>
+          <button 
+            type="submit" 
+            class="dashboard-primary-button">
+            Salvar
+          </button>
+        </form>
+      </div>
+      
+      <!-- Metas -->
+      <div class="dashboard-card">
+        <h2 class="dashboard-card-title">Metas</h2>
+        <form (ngSubmit)="onGoalSubmit()" class="dashboard-form">
+          <div>
+            <label for="goal-name" class="dashboard-form-label">Nome da Meta</label>
+            <input 
+              type="text" 
+              id="goal-name" 
+              [(ngModel)]="goalName"
+              name="goalName"
+              placeholder="Ex: Viagem para a praia" 
+              class="dashboard-form-input" 
+              required>
+          </div>
+          <div>
+            <label for="goal-amount" class="dashboard-form-label">Valor da Meta</label>
+            <input 
+              type="number" 
+              id="goal-amount" 
+              [(ngModel)]="goalAmount"
+              name="goalAmount"
+              placeholder="1500" 
+              step="0.01" 
+              class="dashboard-form-input" 
+              required>
+          </div>
+          <div>
+            <label for="goal-category" class="dashboard-form-label">Categoria da Meta</label>
+            <select 
+              id="goal-category" 
+              [(ngModel)]="goalCategory"
+              name="goalCategory"
+              class="dashboard-form-select"
+              required>
+              <option value="">Selecione uma categoria</option>
+              <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+            </select>
+          </div>
+          <button 
+            type="submit" 
+            class="dashboard-primary-button">
+            Adicionar Meta
+          </button>
+        </form>
+      </div>
+      
+      <!-- Minhas Metas -->
+      <div class="dashboard-card">
+        <h2 class="dashboard-card-title">Minhas Metas</h2>
+        <div class="dashboard-list" *ngIf="goals.length > 0">
+          <div 
+            *ngFor="let goal of goals" 
+            class="dashboard-list-item">
+            <div>
+              <p class="dashboard-list-item-title">{{ goal.name }}</p>
+              <p class="dashboard-list-item-subtitle">{{ getCategoryName(goal.category_id) }} - R$ {{ goal.amount | number: '1.2-2' }}</p>
+            </div>
+            <button 
+              (click)="deleteGoal(goal.id)" 
+              class="dashboard-delete-button">
+              Excluir
+            </button>
+          </div>
+        </div>
+        <p *ngIf="goals.length === 0" class="dashboard-no-items-message">
+          Nenhuma meta definida.
+        </p>
+      </div>
+
+      <!-- Análise das Despesas -->
+      <div class="dashboard-card">
+        <h2 class="dashboard-card-title">Análise das Despesas</h2>
+        <div class="dashboard-chart-container">
+          <div *ngIf="expenseChartData.length > 0; else noData">
+            <div *ngFor="let item of expenseChartData" class="chart-bar-item">
+              <div class="chart-label">{{ item.categoryName }} (R$ {{ item.total | number:'1.2-2' }})</div>
+              <div class="chart-bar-background">
+                <div class="chart-bar-foreground" [style.width.%]="item.percentage">
+                  {{ item.percentage.toFixed(1) }}%
+                </div>
+              </div>
+            </div>
+          </div>
+          <ng-template #noData>
+            <p class="dashboard-no-items-message">Não há dados de despesas para exibir.</p>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

@@ -1,0 +1,109 @@
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f8f9fa; /* bg-gray-50 */
+}
+
+.login-card-wrapper {
+  width: 100%;
+  max-width: 28rem; /* max-w-md */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.login-card {
+  background-color: #ffffff; /* bg-white */
+  padding: 2rem 3rem; /* p-8 sm:p-12 */
+  border-radius: 1rem; /* rounded-2xl */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-lg */
+}
+
+.login-logo {
+  width: 5rem; /* w-20 */
+  height: 5rem; /* h-20 */
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1rem; /* mb-4 */
+}
+
+.login-title {
+  font-size: 1.875rem; /* text-3xl */
+  font-weight: 700; /* font-bold */
+  color: #2d3748; /* text-gray-800 */
+  margin-bottom: 2rem; /* mb-8 */
+  text-align: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* space-y-6 */
+}
+
+.login-label {
+  display: block;
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 500; /* font-medium */
+  color: #4a5568; /* text-gray-600 */
+  margin-bottom: 0.5rem; /* mb-2 */
+}
+
+.login-input {
+  width: 100%;
+  padding: 0.75rem 1rem; /* px-4 py-3 */
+  border: 1px solid #cbd5e0; /* border border-gray-300 */
+  border-radius: 0.5rem; /* rounded-lg */
+}
+
+.login-input:focus {
+  outline: none;
+  border-color: #059669; /* focus:border-emerald-500 */
+  box-shadow: 0 0 0 2px rgba(5, 150, 105, 0.2); /* focus:ring-2 focus:ring-emerald-500 */
+}
+
+.login-button-submit {
+  width: 100%;
+  background-color: #059669; /* bg-emerald-600 */
+  color: #ffffff; /* text-white */
+  font-weight: 600; /* font-semibold */
+  padding: 0.75rem 1.5rem; /* py-3 px-6 */
+  border-radius: 0.5rem; /* rounded-lg */
+  transition: background-color 0.2s ease-in-out; /* transition-colors */
+}
+
+.login-button-submit:hover {
+  background-color: #047857; /* hover:bg-emerald-700 */
+}
+
+.login-button-back {
+  margin-top: 1.5rem; /* mt-6 */
+  color: #059669; /* text-emerald-600 */
+  font-weight: 600; /* font-semibold */
+  text-decoration: none; /* hover:underline */
+  width: 100%;
+  text-align: center;
+  display: block;
+}
+
+.login-button-back:hover {
+  text-decoration: underline;
+}
+
+.login-register-link {
+  margin-top: 1.5rem; /* mt-6 */
+  text-align: center;
+  font-size: 0.875rem; /* text-sm */
+  color: #4a5568; /* text-gray-600 */
+}
+
+.login-register-link a {
+  color: #059669; /* text-emerald-600 */
+  font-weight: 600; /* font-semibold */
+  cursor: pointer;
+}
+
+.login-register-link a:hover {
+  text-decoration: underline;
+}

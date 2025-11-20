@@ -1,0 +1,11 @@
+ <section class="grid">
+      <aside>
+        <h3>Criar lista</h3>
+        <app-form-lista (saved)="onSaved()"></app-form-lista>
+      </aside>
+
+      <main>
+        <h3>Listas</h3>
+        <app-table-lista [refreshTick]="refreshTick()"></app-table-lista>
+      </main>
+    </section>

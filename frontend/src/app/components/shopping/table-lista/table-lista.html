@@ -1,0 +1,68 @@
+<section class="wrap">
+      <header class="head">
+        <h2>Listas</h2>
+
+        <div class="tools">
+          <input
+            type="search"
+            placeholder="Buscar por nome, cpf ou descrição…"
+            [value]="query()"
+            
+          />
+
+          <!-- Se você tiver a rota de criação, mantenha; senão, remova -->
+          <a class="btn" [routerLink]="['/listas', 'nova']">+ Nova lista</a>
+        </div>
+      </header>
+
+      @if (loading()) {
+        <div class="state">Carregando…</div>
+      } @else if (error()) {
+        <div class="state err">Erro ao carregar: {{ error() }}</div>
+      } @else if (filtered().length === 0) {
+        <div class="state">Nenhum item encontrado.</div>
+      } @else {
+        <div class="table-scroll">
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Descrição</th>
+                <th class="actions-col">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (item of filtered(); track item.id_lista) {
+                <tr>
+                  <td>{{ item.id_lista }}</td>
+                  <td>{{ item.nome_lista }}</td>
+                  <td>{{ item.cpf || '—' }}</td>
+                  <td class="desc">{{ item.descricao_lista || '—' }}</td>
+                  <td class="actions">
+                    <!-- Visualizar -->
+                    <a class="icon" [routerLink]="['/listas', item.id_lista]" title="Visualizar" aria-label="Visualizar">
+                      <!-- ícone olho -->
+                      <svg viewBox="0 0 24 24"><path d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7Zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10Z"/></svg>
+                    </a>
+
+                    <!-- Editar -->
+                    <a class="icon" [routerLink]="['/listas', item.id_lista, 'editar']" title="Editar" aria-label="Editar">
+                      <!-- ícone lápis -->
+                      <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                    </a>
+
+                    <!-- Excluir -->
+                    <button class="icon danger" (click)="onDelete(item)" title="Excluir" aria-label="Excluir">
+                      <!-- ícone lixeira -->
+                      <svg viewBox="0 0 24 24"><path d="M6 7h12M9 7V5h6v2m-8 0l1 12h8l1-12H7z"/></svg>
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </section>

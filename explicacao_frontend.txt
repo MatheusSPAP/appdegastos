@@ -1,0 +1,30 @@
+Visão Geral do Frontend - App de Gastos
+
+Este documento fornece uma visão geral da estrutura e organização do frontend da aplicação "App de Gastos".
+
+Framework: Angular
+
+Estrutura de Pastas (src/app):
+
+- components/: Contém os componentes da interface do usuário (as partes visuais da aplicação).
+  - auth/: Componentes relacionados à autenticação (login, registro).
+  - dashboard/: O painel principal da aplicação.
+  - shopping/: Componentes para as listas de compras.
+  - user-settings/: Tela de configurações do usuário.
+
+- guards/: Contém os "guardas de rota".
+  - auth.guard.ts: Protege rotas, permitindo o acesso apenas a usuários autenticados.
+
+- interceptors/: Contém os interceptadores de HTTP.
+  - auth.interceptor.ts: Adiciona automaticamente o token de autenticação em todas as requisições feitas para a API, centralizando a lógica de autorização.
+
+- models/: Define as estruturas de dados (interfaces TypeScript) da aplicação.
+  - Ilista.ts, Imercado.ts, Iproduto.ts: Exemplos de modelos que definem como os dados são estruturados.
+
+- services/: Contém a lógica de negócio e a comunicação com a API.
+  - auth.service.ts: Lida com as funcionalidades de login, registro e gerenciamento de token.
+  - Outros serviços (dentro de `components`): Lidam com a lógica específica de suas funcionalidades (ex: buscar lançamentos, salvar metas, etc.).
+
+Resumo da Arquitetura:
+
+A aplicação segue uma arquitetura baseada em componentes, comum em Angular. A lógica é separada da visualização, e os serviços são responsáveis por interagir com fontes de dados externas (a API). O sistema de autenticação é robusto, utilizando um guarda de rotas para proteger o acesso e um interceptor para automatizar o envio do token de autenticação.

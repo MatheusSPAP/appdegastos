@@ -1,0 +1,115 @@
+ .wrap {
+     display: grid;
+     gap: 12px;
+ }
+
+ .head {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     gap: 12px;
+ }
+
+ .tools {
+     display: flex;
+     gap: 8px;
+     align-items: center;
+ }
+
+ input[type="search"] {
+     padding: 8px 10px;
+     border: 1px solid #ccc;
+     border-radius: 8px;
+     min-width: 280px;
+ }
+
+ .btn {
+     padding: 8px 12px;
+     border-radius: 10px;
+     border: 1px solid #3333;
+     text-decoration: none;
+ }
+
+ .state {
+     padding: 16px;
+     background: #f6f6f6;
+     border-radius: 10px;
+ }
+
+ .state.err {
+     color: #c62828;
+     background: #ffecec;
+ }
+
+ .table-scroll {
+     overflow: auto;
+     border: 1px solid #eee;
+     border-radius: 12px;
+ }
+
+ table.tbl {
+     width: 100%;
+     border-collapse: collapse;
+     min-width: 720px;
+ }
+
+ .tbl th,
+ .tbl td {
+     padding: 10px 12px;
+     border-bottom: 1px dashed #eee;
+     text-align: left;
+ }
+
+ .tbl thead th {
+     position: sticky;
+     top: 0;
+     background: #fafafa;
+ }
+
+ .desc {
+     max-width: 480px;
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis;
+ }
+
+ .actions-col {
+     width: 120px;
+     text-align: right;
+ }
+
+ .actions {
+     display: flex;
+     gap: 6px;
+     justify-content: flex-end;
+ }
+
+ .icon {
+     display: inline-grid;
+     place-items: center;
+     width: 34px;
+     height: 34px;
+     border-radius: 8px;
+     border: 1px solid #e3e3e3;
+     background: white;
+     cursor: pointer;
+ }
+
+ .icon:hover {
+     background: #f3f3f3;
+ }
+
+ .icon svg {
+     width: 18px;
+     height: 18px;
+     fill: currentColor;
+ }
+
+ .icon.danger {
+     color: #b71c1c;
+     border-color: #f1c2c2;
+ }
+
+ .icon.danger:hover {
+     background: #ffefef;
+ }

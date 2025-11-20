@@ -1,0 +1,74 @@
+<div class="user-settings-container">
+  <!-- Header -->
+  <header class="user-settings-header">
+    <div>
+      <h1 class="user-settings-title">Configurações do Usuário</h1>
+      <p class="user-settings-subtitle">Gerencie suas informações pessoais e sua conta.</p>
+    </div>
+    <button 
+      (click)="navigateToDashboard()" 
+      class="user-settings-back-button">
+      Voltar ao Painel
+    </button>
+  </header>
+
+  <!-- Main Content -->
+  <div class="user-settings-main-content">
+    <!-- Editar Informações -->
+    <div class="user-settings-card">
+      <h2 class="user-settings-card-title">Editar Informações</h2>
+      <form (ngSubmit)="onSubmit()" class="user-settings-form">
+        <div class="user-settings-form-grid">
+          <div>
+            <label for="edit-username" class="user-settings-label">Nome de Usuário</label>
+            <input 
+              type="text" 
+              id="edit-username" 
+              [(ngModel)]="username"
+              name="username"
+              class="user-settings-input" 
+              required>
+          </div>
+          <div>
+            <label for="edit-email" class="user-settings-label">Email</label>
+            <input 
+              type="email" 
+              id="edit-email" 
+              [(ngModel)]="email"
+              name="email"
+              class="user-settings-input" 
+              required>
+          </div>
+        </div>
+        <div>
+          <label for="edit-password" class="user-settings-label">Nova Senha (deixe em branco para não alterar)</label>
+          <input 
+            type="password" 
+            id="edit-password" 
+            [(ngModel)]="password"
+            name="password"
+            class="user-settings-input">
+        </div>
+        <button 
+          type="submit" 
+          class="user-settings-primary-button">
+          Salvar Alterações
+        </button>
+      </form>
+    </div>
+
+    <!-- Zona de Perigo -->
+    <div class="user-settings-danger-zone-card">
+      <h2 class="user-settings-danger-zone-title">Zona de Perigo</h2>
+      <p class="user-settings-danger-zone-text">
+        Excluir sua conta removerá permanentemente todos os seus dados, incluindo lançamentos, metas e orçamentos. 
+        Esta ação não pode ser desfeita.
+      </p>
+      <button 
+        (click)="deleteAccount()" 
+        class="user-settings-danger-button">
+        Excluir Conta
+      </button>
+    </div>
+  </div>
+</div>

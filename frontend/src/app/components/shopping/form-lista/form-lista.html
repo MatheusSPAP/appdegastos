@@ -1,0 +1,62 @@
+  <section class="card">
+      <h2>Criar Lista</h2>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+        <!-- CPF (opcional) -->
+        <label>
+          CPF (opcional)
+          <input
+            type="text"
+            formControlName="cpf"
+            placeholder="000.000.000-00"
+            maxlength="14"
+            inputmode="numeric"
+          />
+        </label>
+        @if (form.controls.cpf.touched && form.controls.cpf.invalid) {
+          <small class="err">
+            @if (form.controls.cpf.errors?.['maxlength']) { Máximo 14 caracteres. }
+            @if (form.controls.cpf.errors?.['pattern']) { Formato de CPF inválido. }
+          </small>
+        }
+
+        <!-- Nome da Lista (obrigatório) -->
+        <label>
+          Nome da lista *
+          <input
+            type="text"
+            formControlName="nome_lista"
+            placeholder="Ex.: Compras do mês"
+          />
+        </label>
+        @if (form.controls.nome_lista.touched && form.controls.nome_lista.invalid) {
+          <small class="err">
+            @if (form.controls.nome_lista.errors?.['required']) { Campo obrigatório. }
+            @if (form.controls.nome_lista.errors?.['minlength']) { Mínimo de 3 caracteres. }
+          </small>
+        }
+
+        <!-- Descrição (opcional) -->
+        <label>
+          Descrição (opcional)
+          <textarea
+            rows="3"
+            formControlName="descricao_lista"
+            placeholder="Observações..."
+            maxlength="255"
+          ></textarea>
+        </label>
+        @if (form.controls.descricao_lista.touched && form.controls.descricao_lista.invalid) {
+          <small class="err">
+            @if (form.controls.descricao_lista.errors?.['maxlength']) { Máximo 255 caracteres. }
+          </small>
+        }
+
+        <div class="actions">
+          <button type="submit" [disabled]="form.invalid">Salvar</button>
+          <button type="button" (click)="reset()">Limpar</button>
+        </div>
+      </form>
+    </section>
+
+    

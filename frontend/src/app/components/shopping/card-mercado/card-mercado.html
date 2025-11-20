@@ -1,0 +1,16 @@
+<div class="news">
+    <span class="nome_mercado">
+        <h2>{{mercado.nome_fantasia}} </h2>
+        <h2>{{mercado.cnpj}} </h2>
+        <p class="listing-location">{{ mercado.telefone}}, {{mercado.whtsapp }}</p>
+    </span>
+    <span><i class="material-icons">location_on</i></span>
+    <span>3 Km </span>
+
+    <div>
+        <button [routerLink]="['/list_produtos', mercado.cnpj,mercado.nome_fantasia]">Ver produtos</button>
+
+        <!-- <span class="source">{{source_name}} </span> -->
+        <!-- <span class="pub_date">{{pub_date}}</span> -->
+    </div>
+</div>
