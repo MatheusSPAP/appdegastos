@@ -1,5 +1,14 @@
 import mysql from 'mysql2/promise';
-import 'dotenv/config';
+import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Obter o diretório atual do módulo
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Carregar o arquivo .env do diretório raiz do projeto
+dotenv.config({ path: path.resolve(__dirname, '../../../.env') });
 
 const dbConfig = {
     host: process.env.DB_HOST,
